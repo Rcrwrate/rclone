@@ -281,7 +281,7 @@ func (f *Fs) dumpLine(r *hashRecord, path string, include bool, err error) strin
 	case err != nil:
 		status = "bad"
 	case r.Fp == anyFingerprint:
-		status = "stk"
+		status = "ok "
 	default:
 		status = "ok "
 	}
