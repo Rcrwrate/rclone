@@ -21,12 +21,11 @@ on:
 
 jobs:
   build:
-    if: inputs.manual || (github.repository == 'rclone/rclone' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name))
     timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
-        job_name: ['linux', 'linux_386', 'mac_amd64', 'mac_arm64', 'windows', 'other_os', 'go1.23']
+        job_name: ['linux', 'linux_386', 'windows', 'other_os', 'go1.23']
 
         include:
           - job_name: linux
@@ -171,6 +170,12 @@ jobs:
         shell: bash
         run: |
           rclone version
+          
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rclone-${{ matrix.os }}
+          path: rclone
 
       - name: Run tests
         shell: bash
